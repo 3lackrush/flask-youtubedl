@@ -1,0 +1,52 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf%}
+{% block title %}
+
+
+{% endblock %}
+
+{% block content %}
+      <nav class="navbar navbar-inverse" role="navigation">
+          <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">DashBoard任务管理</a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+            <li><a href="#"><span class="glyphicon glyphicon-user"></span> 注册</a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> 登录</a></li>
+            </ul>
+          </div>
+      </nav>
+
+  {% if message %} {{ message }} {% endif %}
+
+<div class="container">
+  <form method="post">
+        {{ wtf.form_field(form.download_url) }}
+        {{ wtf.form_field(form.socks5Proxy) }}
+        <input class="btn btn-primary" type="submit" name="下载">
+        <input class="btn btn-info" type="reset" name="重新填写">
+  </form>
+  <table class="table table-hover">
+        <caption>已存在的任务列表</caption>
+         <thead>
+            <tr>
+               <th>Celery任务ID</th>
+               <th>下载链接</th>
+               <th>代理参数</th>
+            </tr>
+         </thead>
+         {% if download_task_msg %}
+         <tbody>
+         {% for msg in download_task_msg %}
+            <tr>
+               <td>{{ msg[0] }}</td>
+               <td>{{ msg[1] }}</td>
+               <td>{{ msg[2] }}</td>
+            </tr>
+        {% endfor %}
+         </tbody>
+        {% endif %}
+      </table>
+</div>
+{% endblock %}
